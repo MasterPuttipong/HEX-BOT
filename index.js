@@ -25,7 +25,7 @@ client.once('ready', () => {
 setInterval(function(){
     console.log('-Checking for expired keys...');
 
-    conn.query("UPDATE users SET `valid` = 'false' WHERE `expire` <= DATE_SUB(NOW(), INTERVAL 5 MINUTE)", function (err) {
+    conn.query("UPDATE users SET `valid` = 'false' WHERE `expire` <= DATE_SUB(NOW(), INTERVAL 5 MINUTE)", function (err, result, fields) {
 
         if (err) {
             return console.log(err);
@@ -37,7 +37,7 @@ setInterval(function(){
 setInterval(function(){
     console.log('-Checking for expired keys with ip address...');
 
-    conn.query("UPDATE users SET `server` = '0' WHERE `expire` <= DATE_SUB(NOW(), INTERVAL 5 MINUTE)", function (err) {
+    conn.query("UPDATE users SET `server` = '0' WHERE `expire` <= DATE_SUB(NOW(), INTERVAL 5 MINUTE)", function (err, result, fields) {
 
         if (err) {
             return console.log(err);
@@ -50,6 +50,9 @@ setInterval(function(){
 client.on('message', message => {
     if (!message.content.startsWith(config.prefix) || message.author.bot) return;
     if (message.channel.type == "dm") return;	
+    if (message.channel.id === 'channel id') return;
+	if (message.channel.id === 'channel id') return;
+	if (message.channel.id === 'channel id') return;
     const args = message.content.slice(config.prefix.length).split(' ');
     const command = args.shift();
 	
@@ -62,7 +65,7 @@ client.on('message', message => {
 
             return message.channel.send(embed);
         }
-        conn.query('SELECT * FROM users WHERE license = ?', [args[0]], function (err, result) {
+        conn.query('SELECT * FROM users WHERE license = ?', [args[0]], function (err, result, fields) {
             if (err) {
                 const embed = new Discord.RichEmbed()
                     .setColor('#e2574c')
@@ -74,7 +77,7 @@ client.on('message', message => {
             if (result.length > 0) {
                 if (result) {
                     if (result[0].user == "NULL") {
-                        conn.query('UPDATE users SET user = ? WHERE license = ?', [message.member.id, args[0]], function (err) {
+                        conn.query('UPDATE users SET user = ? WHERE license = ?', [message.member.id, args[0]], function (err, result, fields) {
                             if (err) {
                                 const embed = new Discord.RichEmbed()
                                     .setColor('#e2574c')
@@ -113,7 +116,7 @@ client.on('message', message => {
 
             return message.channel.send(embed);
         }
-        conn.query('SELECT * FROM users WHERE license = ?', [args[0]], function (err, result) {
+        conn.query('SELECT * FROM users WHERE license = ?', [args[0]], function (err, result, fields) {
             if (err) {
                 const embed = new Discord.RichEmbed()
                     .setColor('#e2574c')
@@ -135,7 +138,7 @@ client.on('message', message => {
                 if (result) {
                     let beforeIp = result[0].server;
                     if (result[0].user == message.member.id || message.member.hasPermission('ADMINISTRATOR')) {
-                        conn.query('UPDATE users SET server = ? WHERE license = ?', [args[1], args[0]], function (err) {
+                        conn.query('UPDATE users SET server = ? WHERE license = ?', [args[1], args[0]], function (err, result, fields) {
                             if (err) {
                                 const embed = new Discord.RichEmbed()
                                     .setColor('#e2574c')
@@ -178,7 +181,7 @@ client.on('message', message => {
 
             return message.channel.send(embed);
         }
-        conn.query('SELECT * FROM users WHERE license = ?', [args[0]], function (err, result) {
+        conn.query('SELECT * FROM users WHERE license = ?', [args[0]], function (err, result, fields) {
             if (err) {
                 const embed = new Discord.RichEmbed()
                     .setColor('#e2574c')
@@ -198,9 +201,11 @@ client.on('message', message => {
 
                 if (result) {
 
+                    let beforeproduct = result[0].product;
+
                     if (result[0].user == message.member.id || message.member.hasPermission('ADMINISTRATOR')) {
 
-                        conn.query('UPDATE users SET product = ? WHERE license = ?', [args[1], args[0]], function (err) {
+                        conn.query('UPDATE users SET product = ? WHERE license = ?', [args[1], args[0]], function (err, result, fields) {
 
                             if (err) {
 
@@ -236,7 +241,7 @@ client.on('message', message => {
 
  if (command === 'status') {
 
-        conn.query('SELECT * FROM users WHERE user = ?', [message.member.id], function (err, result) {
+        conn.query('SELECT * FROM users WHERE user = ?', [message.member.id], function (err, result, fields) {
 
             if (err) {
 
@@ -284,7 +289,7 @@ client.on('message', message => {
     }
     if (command === 'keys') {
 
-        conn.query('SELECT * FROM users WHERE user = ?', [message.member.id], function (err, result) {
+        conn.query('SELECT * FROM users WHERE user = ?', [message.member.id], function (err, result, fields) {
 
             if (err) {
 
@@ -358,7 +363,7 @@ client.on('message', message => {
 
                 return message.channel.send(exampleEmbed);
             }
-            conn.query('SELECT license FROM users WHERE license = ?', [args[0]], function (err, result) {
+            conn.query('SELECT license FROM users WHERE license = ?', [args[0]], function (err, result, fields) {
                 if (err) {
                     const embed = new Discord.RichEmbed()
                         .setColor('#e2574c')
@@ -368,7 +373,7 @@ client.on('message', message => {
                 }
                 if (result.length > 0) {
                     if (result) {
-                        conn.query('DELETE FROM users WHERE license = ?', [args[0]], function (err) {                      
+                        conn.query('DELETE FROM users WHERE license = ?', [args[0]], function (err, result, fields) {                      
                             if (err) {
                                 const embed = new Discord.RichEmbed()
                                     .setColor('#e2574c')
@@ -405,7 +410,7 @@ client.on('message', message => {
 
                 return message.channel.send(embed);
             }
-                conn.query(`INSERT INTO users (license, expire, creator) VALUES ('${r}', DATE_ADD(NOW(), INTERVAL ${args[0]} ${args[1]}), ${message.member.id});`, function (err) {
+                conn.query(`INSERT INTO users (license, expire, creator) VALUES ('${r}', DATE_ADD(NOW(), INTERVAL ${args[0]} ${args[1]}), ${message.member.id});`, function (err, result, fields) {
                     if (err) {
                         const embed = new Discord.RichEmbed()
                             .setColor('#e2574c')
