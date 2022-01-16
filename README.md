@@ -2,6 +2,8 @@
 ## HEX BOT [![](https://www.codefactor.io/repository/github/rutkuli/discord-authbot/badge)](https://www.codefactor.io/repository/github/rutkuli/discord-authbot)
 
 > 🔴 Source code ( Due to the large amount of source code, I will gradually update it. ) 
+> 
+> 🟢 If you don't want to fork, you can download the full version here. [Download](https://github.com/SarnaxLii/HEX-BOT/releases/tag/BOT)
 
 ***
 ###  Invite BOT to your server : [HEX BOT](https://discord.com/oauth2/authorize?client_id=755859271006158888&scope=bot+applications.commands&permissions=8)
