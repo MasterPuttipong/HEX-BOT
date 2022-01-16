@@ -1,7 +1,7 @@
 
 ## HEX BOT [![](https://www.codefactor.io/repository/github/rutkuli/discord-authbot/badge)](https://www.codefactor.io/repository/github/rutkuli/discord-authbot)
 
-> Source code 
+> 🔴 Source code ( Due to the large amount of source code, I will gradually update it. ) 
 
 ***
 ###  Invite BOT to your server : [HEX BOT](https://discord.com/oauth2/authorize?client_id=755859271006158888&scope=bot+applications.commands&permissions=8)
